@@ -5,11 +5,11 @@ date: 2019-09-15
 output: html_document
 ---
 
-```{r setup}
+# Problem 1
+
+```{r setup 1}
 library(tidyverse)
 ```
-
-# Problem 1
 
 First, we Create a dataframe containing variables of four different types, and try to take the mean of each variable in the dataframe.
 
@@ -43,7 +43,7 @@ The logical and factor variables can be converted, and the character variable ca
 
 Now, we do the last part of problem 1.
 
-* convert the logical vector to numeric, and multiply the random sample by the result
+Convert the logical vector to numeric, and multiply the random sample by the result.
 
 ```{r}
 # convert the logical vector to numeric
@@ -53,7 +53,7 @@ logical_to_num = as.numeric(pull(df, vec_logical))
 logical_to_num_multi_s = logical_to_num * pull(df, vec_numeric)
 ```
 
-* convert the logical vector to a factor, and multiply the random sample by the result
+Convert the logical vector to a factor, and multiply the random sample by the result.
 
 ```{r}
 # convert the logical vector to a factor
@@ -63,7 +63,7 @@ logical_to_fac = as.factor(pull(df, vec_logical))
 logical_to_fac_multi_s = logical_to_fac * pull(df, vec_numeric)
 ```
 
-* convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result
+Convert the logical vector to a factor and then convert the result to numeric, and multiply the random sample by the result.
 
 ```{r}
 # convert the logical vector to a factor
@@ -74,4 +74,47 @@ logical_to_fac_to_num = as.numeric(logical_to_fac)
 
 # multiply the random sample by the result
 logical_to_fac_to_num_multi_s = logical_to_fac_to_num * pull(df, vec_numeric)
+```
+
+# Problem 2
+
+```{r setup 2}
+rm(list = ls())
+library(tidyverse)
+```
+
+First we Create a data frame.
+
+```{r dataframe}
+df = tibble(
+  x = rnorm(500),
+  y = rnorm(500),
+  vec_logical = x + y > 1,
+  vec_num = as.numeric(vec_logical),
+  vec_fac = as.factor(vec_logical)
+)
+```
+
+* The size of the dataset is nrow = `r dim(df)[1]`, ncol = `r dim(df)[2]`. 
+
+*  the mean, median, and standard deviation of x is `r mean(pull(df, x))`, `r median(pull(df, x))`, and `r sd(pull(df, x))`.
+
+Then make a scatterplot of y vs x; color points using the logical variable.
+
+```{r plot logical variable}
+ggplot(df, aes(x = x, y = y, color = vec_logical)) + geom_point()
+
+ggsave(file = "plot_logical_variable.png")
+```
+
+Color points using the numeric variable.
+
+```{r plot numeric variable}
+ggplot(df, aes(x = x, y = y, color = vec_num)) + geom_point()
+```
+
+Color points using the numeric variable.
+
+```{r plot factor variable}
+ggplot(df, aes(x = x, y = y, color = vec_fac)) + geom_point()
 ```
