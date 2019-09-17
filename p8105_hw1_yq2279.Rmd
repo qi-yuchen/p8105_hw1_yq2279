@@ -2,7 +2,7 @@
 title: "p8105_hw1_yq2279"
 author: "Qi Yuchen"
 date: 2019-09-15
-output: html_document
+output: github_document
 ---
 
 # Problem 1
