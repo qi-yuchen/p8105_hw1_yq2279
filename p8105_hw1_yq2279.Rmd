@@ -7,13 +7,13 @@ output: github_document
 
 # Problem 1
 
-```{r setup 1}
+```{r setup 1, include = FALSE}
 library(tidyverse)
 ```
 
 First, we create a dataframe containing variables of four different types, and try to take the mean of each variable in the dataframe.
 
-```{r dataframe and mean}
+```{r dataframe and mean, results = "hide"}
 # create a dataframe
 df = tibble(
   vec_numeric = rnorm(8),
@@ -33,15 +33,15 @@ From the above we can see when taking the mean, the numerical vector and logical
 
 Next, we convert the logical, character, and factor variables to numeric.
 
-```{r convert to mumeric, results = "hide", warning = FALSE}
+```{r convert to mumeric, results = "hide"}
 as.numeric(pull(df, vec_logical))
 as.numeric(pull(df, vec_char))
 as.numeric(pull(df, vec_factor))
 ```
 
-The logical variable is converted to a numeric varible with elements "0" and "1". This is because "0" means "false" and "1" means "true", which also explains why logical varibles can take the mean.
-The factor variable is converted to a numeric varible with elements "1", "2" and "3". This is because the elements in the fator variable have three levels. But you cannot take the mean because there is no mean for levels.
-The character variable is converted to a numeric varible with elements NA. This is because different character elements cannot be assigned a numeric value. So it cannot take the mean.
+* The logical variable is converted to a numeric varible with elements "0" and "1". This is because "0" means "false" and "1" means "true", which also explains why logical varibles can take the mean.
+* The factor variable is converted to a numeric varible with elements "1", "2" and "3". This is because the elements in the factor variable have three levels. But you cannot take the mean because there is no mean for different levels.
+* The character variable is converted to a numeric variable with elements NA. This is because different character elements cannot be assigned a numeric value without losing the meanings. So it cannot take the mean.
 
 
 Now, we do the last part of problem 1.
@@ -83,13 +83,12 @@ logical_to_fac_to_num_multi_s = logical_to_fac_to_num * pull(df, vec_numeric)
 
 ```{r setup 2}
 rm(list = ls())
-library(tidyverse)
 ```
 
 First we Create a data frame.
 
 ```{r dataframe}
-df = tibble(
+df_2 = tibble(
   x = rnorm(500),
   y = rnorm(500),
   vec_logical = x + y > 1,
@@ -98,14 +97,16 @@ df = tibble(
 )
 ```
 
-* The size of the dataset is nrow = `r dim(df)[1]`, ncol = `r dim(df)[2]`. 
+* The size of the dataset is nrow = `r dim(df_2)[1]`, ncol = `r dim(df_2)[2]`. 
 
-*  the mean, median, and standard deviation of x is `r mean(pull(df, x))`, `r median(pull(df, x))`, and `r sd(pull(df, x))`.
+* The mean, median, and standard deviation of x is `r mean(pull(df_2, x))`, `r median(pull(df_2, x))`, and `r sd(pull(df_2, x))`.
 
-Then make a scatterplot of y vs x; color points using the logical variable.
+* the proportion of cases for which x + y > 1 is `r mean(pull(df_2, vec_num))*100`%.
+
+Then make a scatterplot of y vs x; color points using the logical variable and export it.
 
 ```{r plot logical variable}
-ggplot(df, aes(x = x, y = y, color = vec_logical)) + geom_point()
+ggplot(df_2, aes(x = x, y = y, color = vec_logical)) + geom_point()
 
 ggsave(file = "plot_logical_variable.png")
 ```
@@ -113,11 +114,14 @@ ggsave(file = "plot_logical_variable.png")
 Color points using the numeric variable.
 
 ```{r plot numeric variable}
-ggplot(df, aes(x = x, y = y, color = vec_num)) + geom_point()
+ggplot(df_2, aes(x = x, y = y, color = vec_num)) + geom_point()
 ```
 
-Color points using the numeric variable.
+Color points using the factor variable.
 
 ```{r plot factor variable}
-ggplot(df, aes(x = x, y = y, color = vec_fac)) + geom_point()
+ggplot(df_2, aes(x = x, y = y, color = vec_fac)) + geom_point()
 ```
+
+Cooment on the color scales:
+the logical and factor variables are binary and there are two different colors. As for The numeric variable, although there are only 0 and 1 values, the legend shows a range from 0.00 to 1.00 instead of two colors.
