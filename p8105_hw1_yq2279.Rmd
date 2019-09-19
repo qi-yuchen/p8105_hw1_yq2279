@@ -85,7 +85,7 @@ logical_to_fac_to_num_multi_s = logical_to_fac_to_num * pull(df, vec_numeric)
 rm(list = ls())
 ```
 
-First we Create a data frame.
+First we create a data frame.
 
 ```{r dataframe}
 df_2 = tibble(
