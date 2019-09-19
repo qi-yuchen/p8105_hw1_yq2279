@@ -81,7 +81,7 @@ logical_to_fac_to_num_multi_s = logical_to_fac_to_num * pull(df, vec_numeric)
 
 # Problem 2
 
-```{r setup 2}
+```{r setup 2, include = FALSE}
 rm(list = ls())
 ```
 
