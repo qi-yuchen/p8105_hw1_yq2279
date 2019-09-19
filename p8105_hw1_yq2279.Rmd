@@ -11,7 +11,7 @@ output: github_document
 library(tidyverse)
 ```
 
-First, we Create a dataframe containing variables of four different types, and try to take the mean of each variable in the dataframe.
+First, we create a dataframe containing variables of four different types, and try to take the mean of each variable in the dataframe.
 
 ```{r dataframe and mean}
 # create a dataframe
@@ -19,27 +19,30 @@ df = tibble(
   vec_numeric = rnorm(8),
   vec_logical = vec_numeric > 0,
   vec_char = c("My", "name", "is", "Chloe", ".", "Good", "day", "."),
-  vec_factor = factor(c("male", "male", "female", "female", "male", "male", "male", "female"))
+  vec_factor = factor(c("male", "male", "female", "female", "trans", "trans", "male", "female"))
 )
 
 # take the mean of each variable
-mean_numeric = mean(pull(df, vec_numeric))
-mean_logical = mean(pull(df, vec_logical))
-mean_char = mean(pull(df, vec_char))
-mean_factor = mean(pull(df, vec_factor))
+mean(pull(df, vec_numeric))
+mean(pull(df, vec_logical))
+mean(pull(df, vec_char))
+mean(pull(df, vec_factor))
 ```
 
 From the above we can see when taking the mean, the numerical vector and logical vector work, the character vector and the factor vector don't.
 
-Next, we  convert the logical, character, and factor variables to numeric.
+Next, we convert the logical, character, and factor variables to numeric.
 
 ```{r convert to mumeric, results = "hide", warning = FALSE}
-logical_to_num = as.numeric(pull(df, vec_logical))
-char_to_num = as.numeric(pull(df, vec_char))
-factor_to_num = as.numeric(pull(df, vec_factor))
+as.numeric(pull(df, vec_logical))
+as.numeric(pull(df, vec_char))
+as.numeric(pull(df, vec_factor))
 ```
 
-The logical and factor variables can be converted, and the character variable cannot.
+The logical variable is converted to a numeric varible with elements "0" and "1". This is because "0" means "false" and "1" means "true", which also explains why logical varibles can take the mean.
+The factor variable is converted to a numeric varible with elements "1", "2" and "3". This is because the elements in the fator variable have three levels. But you cannot take the mean because there is no mean for levels.
+The character variable is converted to a numeric varible with elements NA. This is because different character elements cannot be assigned a numeric value. So it cannot take the mean.
+
 
 Now, we do the last part of problem 1.
 
